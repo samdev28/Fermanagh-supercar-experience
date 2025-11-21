@@ -1,0 +1,581 @@
+/* =========================================
+   FERMANAGH SUPERCAR EXPERIENCE - WEBSITE CSS
+   Color Theme: White, Black, and Gold
+   ========================================= */
+
+/* ===== GLOBAL STYLES - Everything on the page ===== */
+:root {
+    /* These are CSS variables - think of them as storage boxes for colors
+       We use them throughout the file so if we want to change a color,
+       we only change it once here, not everywhere in the CSS */
+    
+    --gold: #d4af37;           /* Main gold color */
+    --gold-light: #f4d03f;      /* Lighter gold for accents */
+    --black: #1a1a1a;           /* Very dark black */
+    --dark-gray: #2d2d2d;       /* Dark gray (slightly lighter than black) */
+    --white: #ffffff;           /* Pure white */
+    --light-gray: #f5f5f5;      /* Very light gray (almost white) */
+    --text-color: #333333;      /* Dark gray text color */
+}
+
+/* The asterisk (*) means "ALL elements on the page"
+   We're removing all default margins and padding,
+   and setting box-sizing so width/height includes borders and padding */
+* {
+    margin: 0;                  /* Remove outer spacing */
+    padding: 0;                 /* Remove inner spacing */
+    box-sizing: border-box;     /* Make sizing calculations easier */
+}
+
+/* HTML element: the entire page container */
+html {
+    scroll-behavior: smooth;    /* When you click a link, it smoothly scrolls
+                                   instead of jumping instantly */
+}
+
+/* BODY: everything you see on the page */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Above: the type of font (Segoe UI is modern and clean)
+       If browser doesn't have Segoe UI, it uses Tahoma, etc. (fallbacks) */
+    
+    color: var(--text-color);   /* Default text color (dark gray) */
+    line-height: 1.6;           /* Space between lines of text - 1.6 = 60% of font size */
+    background-color: var(--white);  /* White background */
+}
+
+/* ===== NAVBAR STYLING ===== 
+   The navigation bar at the top of the page */
+
+.navbar {
+    /* DISPLAY FLEX: Makes children (logo, links, button) line up horizontally */
+    display: flex;
+    
+    /* justify-content: space-between = spread items to left, center, and right */
+    justify-content: space-between;
+    
+    /* align-items: center = vertically center everything */
+    align-items: center;
+    
+    /* BACKGROUND GRADIENT: smooth color transition from black to dark-gray
+       135deg = diagonal direction from top-left to bottom-right */
+    background: linear-gradient(135deg, var(--black) 0%, var(--dark-gray) 100%);
+    
+    /* PADDING: 15px top/bottom, 40px left/right
+       This creates empty space inside the navbar */
+    padding: 15px 40px;
+    
+    /* BOX-SHADOW: drop shadow effect 
+       (4px right, 15px down, 15px blur, gold color with transparency) */
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+    
+    /* BORDER-BOTTOM: 2px gold line at bottom of navbar */
+    border-bottom: 2px solid var(--gold);
+    
+    /* position: sticky = navbar stays at top when you scroll */
+    position: sticky;
+    top: 0;
+    
+    /* z-index: 1000 = keep navbar on top of other elements */
+    z-index: 1000;
+}
+
+/* Logo container - prevents it from shrinking */
+.navbar .logo {
+    flex-shrink: 0;             /* Keep logo at original size */
+}
+
+/* The logo image inside the logo div */
+.navbar .logo img {
+    height: 50px;               /* Make logo 50 pixels tall */
+    width: auto;                /* Width adjusts automatically to keep proportions */
+}
+
+/* Navigation links list (Home, Account, Racing, About) */
+.navbar .nav-links {
+    display: flex;              /* Line items up horizontally */
+    list-style: none;           /* Remove bullet points from list */
+    gap: 35px;                  /* 35 pixels space between each link */
+}
+
+/* Individual navigation links */
+.navbar .nav-links li a {
+    color: var(--white);        /* Make text white */
+    text-decoration: none;      /* Remove underline from links */
+    font-size: 1rem;            /* Normal text size */
+    font-weight: 600;           /* Make text semi-bold */
+    letter-spacing: 0.5px;      /* Add tiny space between letters */
+    
+    /* position: relative = prepare for the underline animation below */
+    position: relative;
+    
+    /* transition: all 0.3s ease = smoothly animate any changes over 0.3 seconds */
+    transition: all 0.3s ease;
+    
+    padding: 8px 12px;          /* Padding around the text */
+}
+
+/* ::after creates a fake element AFTER the link
+   We'll use this to create the animated gold underline */
+.navbar .nav-links li a::after {
+    content: '';                /* Create an empty element */
+    position: absolute;         /* Position it relative to the link */
+    bottom: -5px;               /* Place it 5px below the link */
+    left: 0;                    /* Start from the left */
+    width: 0;                   /* Start with 0 width (invisible) */
+    height: 2px;                /* 2 pixels tall */
+    
+    /* GRADIENT underline: transition from gold to light-gold from left to right */
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    
+    /* When width changes, animate it smoothly */
+    transition: width 0.3s ease;
+}
+
+/* When you hover over a link (mouse over it) */
+.navbar .nav-links li a:hover {
+    color: var(--gold);         /* Change text color to gold */
+    transform: translateY(-2px);/* Move text up 2 pixels (lift effect) */
+}
+
+/* When you hover, make the underline expand to full width */
+.navbar .nav-links li a:hover::after {
+    width: 100%;                /* Underline now fills the whole width */
+}
+
+/* LOGIN BUTTON styling */
+button.login {
+    padding: 10px 24px;         /* Inner spacing */
+    
+    /* GRADIENT BACKGROUND: gold to light-gold diagonal */
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    
+    color: var(--black);        /* Text color: black */
+    border: none;               /* Remove default button border */
+    border-radius: 25px;        /* Round corners (pill-shaped button) */
+    cursor: pointer;            /* Change cursor to hand when hovering */
+    font-size: 0.95rem;         /* Slightly smaller text */
+    font-weight: 700;           /* Bold text */
+    letter-spacing: 0.5px;      /* Space between letters */
+    transition: all 0.3s ease;  /* Smooth animation */
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);  /* Gold shadow */
+}
+
+/* When you hover over the login button */
+button.login:hover {
+    /* Reverse the gradient direction for a dynamic effect */
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+    
+    transform: translateY(-3px); /* Lift button up 3 pixels */
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);  /* Bigger shadow */
+}
+
+/* When you click the button */
+button.login:active {
+    transform: translateY(-1px); /* Slightly less lift (pressed effect) */
+}
+
+/* ===== HERO SECTION STYLING =====
+   The big banner at the top with the main title */
+
+.Hero-section {
+    /* GRADIENT BACKGROUND: black to dark-gray */
+    background: linear-gradient(135deg, var(--black) 0%, var(--dark-gray) 100%);
+    
+    color: var(--white);        /* White text */
+    padding: 120px 40px;        /* Lots of padding for height */
+    text-align: center;         /* Center all text */
+    min-height: 70vh;           /* At least 70% of the viewport height */
+    
+    /* Use flexbox to center content */
+    display: flex;
+    align-items: center;        /* Vertical center */
+    justify-content: center;    /* Horizontal center */
+    
+    position: relative;         /* For the decorative circle below */
+    overflow: hidden;           /* Hide anything that goes outside */
+}
+
+/* ::before creates a decorative circle in the background */
+.Hero-section::before {
+    content: '';                /* Empty element */
+    position: absolute;         /* Position it behind text */
+    top: -50%;                  /* Move it up so only part is visible */
+    right: -10%;                /* Move it to the right */
+    width: 600px;               /* Big circle */
+    height: 600px;
+    
+    /* RADIAL GRADIENT: gold circle that fades to transparent */
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+    
+    border-radius: 50%;         /* Make it a circle */
+    z-index: 1;                 /* Put it behind the text */
+}
+
+/* The content container inside hero section */
+.hero-page {
+    position: relative;         /* Sit on top of the decorative circle */
+    z-index: 2;                 /* Higher z-index = on top */
+    max-width: 800px;           /* Don't get wider than 800px */
+    margin: 0 auto;             /* Center it */
+}
+
+/* The main heading in the hero */
+.hero-page h1 {
+    font-size: 3.5rem;          /* Very large text */
+    font-weight: 800;           /* Extra bold */
+    margin-bottom: 20px;        /* Space below heading */
+    letter-spacing: -1px;       /* Tighten letter spacing */
+    
+    /* GRADIENT TEXT: white to gold
+       This makes the text itself have a gradient color */
+    background: linear-gradient(135deg, var(--white) 0%, var(--gold) 100%);
+    
+    /* These three properties make the gradient visible in text */
+    -webkit-background-clip: text;      /* For older browsers */
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Subtitle paragraph in the hero */
+.hero-page p {
+    font-size: 1.5rem;          /* Large text */
+    color: var(--gold);         /* Gold color */
+    font-weight: 300;           /* Light/thin text */
+    letter-spacing: 1px;        /* Extra space between letters */
+}
+
+/* ===== INFO, BACKSTORY, AND VISION SECTIONS =====
+   These three sections have similar styling, so we style them together */
+
+.Info, .Backstory, .vision {
+    padding: 80px 40px;         /* Big padding for breathing room */
+    max-width: 1200px;          /* Don't get wider than 1200px */
+    margin: 0 auto;             /* Center the content */
+}
+
+/* Headings in all info/backstory/vision sections */
+.information h2, .story h2, .future-goals h2, .vehicle-info h2, .reach-out h2 {
+    font-size: 2.5rem;          /* Large heading */
+    color: var(--black);        /* Dark text */
+    margin-bottom: 25px;        /* Space below heading */
+    
+    position: relative;         /* For the gold border below */
+    padding-bottom: 15px;       /* Space between text and border */
+    border-bottom: 3px solid var(--gold);  /* Gold underline */
+}
+
+/* Paragraphs in these sections */
+.information p, .story p, .future-goals p, .vehicle-info p, .reach-out p {
+    font-size: 1.1rem;          /* Readable size */
+    color: var(--text-color);   /* Dark gray text */
+    line-height: 1.8;           /* Extra spacing between lines */
+    margin-bottom: 30px;        /* Space after paragraphs */
+}
+
+/* Images in these sections */
+.information .image, .story .image, .future-goals .image {
+    margin-top: 40px;           /* Space above image */
+    border-radius: 10px;        /* Rounded corners */
+    overflow: hidden;           /* Hide anything that goes outside rounded corners */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);  /* Soft shadow */
+}
+
+/* The actual image tags */
+.information .image img, .story .image img, .future-goals .image img {
+    width: 100%;                /* Fill the container */
+    height: auto;               /* Keep proportions */
+    display: block;             /* Remove inline spacing */
+}
+
+/* ===== CARS SECTION =====
+   The section that shows the list of available cars */
+
+.cars {
+    /* GRADIENT BACKGROUND: light-gray to white (subtle gradient) */
+    background: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 100%);
+    
+    padding: 80px 40px;         /* Breathing room */
+}
+
+/* Container for car information */
+.vehicle-info {
+    max-width: 1200px;          /* Max width */
+    margin: 0 auto;             /* Centered */
+}
+
+/* The list of cars */
+.vehicle-info ul {
+    list-style: none;           /* Remove bullets */
+    
+    /* GRID LAYOUT: creates responsive columns */
+    display: grid;
+    
+    /* repeat(auto-fit, minmax(250px, 1fr)) = 
+       Create as many columns as fit, each at least 250px wide,
+       stretching to fill available space */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    
+    gap: 20px;                  /* Space between items */
+    margin: 30px 0;             /* Space above and below the grid */
+}
+
+/* Individual car item (list item) */
+.vehicle-info ul li {
+    background: var(--white);   /* White background */
+    padding: 25px;              /* Inner spacing */
+    border-radius: 8px;         /* Slightly rounded corners */
+    border-left: 4px solid var(--gold);  /* Gold line on the left */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);  /* Subtle shadow */
+    transition: all 0.3s ease;  /* Smooth animation for hover */
+    font-size: 1.1rem;          /* Car name size */
+    color: var(--text-color);   /* Dark text */
+    font-weight: 500;           /* Medium bold */
+}
+
+/* When you hover over a car item */
+.vehicle-info ul li:hover {
+    transform: translateY(-5px); /* Lift up 5 pixels */
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);  /* Bigger gold shadow */
+    border-left-color: var(--gold-light);  /* Gold border becomes lighter */
+}
+
+/* Button in the cars section (Get one Now!) */
+.vehicle-info button {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    color: var(--black);        /* Black text on gold button */
+    padding: 12px 32px;         /* Padding around text */
+    border: none;               /* Remove default border */
+    border-radius: 25px;        /* Pill shape */
+    font-size: 1rem;            /* Regular size */
+    font-weight: 700;           /* Bold */
+    cursor: pointer;            /* Hand cursor */
+    transition: all 0.3s ease;  /* Smooth animation */
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);  /* Gold shadow */
+    margin-top: 20px;           /* Space above button */
+}
+
+/* When you hover over the car button */
+.vehicle-info button:hover {
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+    transform: translateY(-3px); /* Lift up */
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);  /* Bigger shadow */
+}
+
+/* ===== CONTACT SECTION =====
+   The "Contact Us" section at the bottom */
+
+.contact-us {
+    /* GRADIENT BACKGROUND: black to dark-gray */
+    background: linear-gradient(135deg, var(--black) 0%, var(--dark-gray) 100%);
+    
+    color: var(--white);        /* White text */
+    padding: 80px 40px;         /* Padding */
+    text-align: center;         /* Center everything */
+}
+
+/* Container for contact info */
+.reach-out {
+    max-width: 800px;           /* Don't get too wide */
+    margin: 0 auto;             /* Center it */
+}
+
+/* Heading in contact section */
+.reach-out h2 {
+    color: var(--white);        /* White heading */
+    border-bottom-color: var(--gold);  /* Gold underline */
+}
+
+/* Paragraph in contact section */
+.reach-out p {
+    color: rgba(255, 255, 255, 0.9);  /* White but slightly transparent */
+    margin-bottom: 30px;        /* Space below */
+}
+
+/* Contact button styling */
+.contact-button {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    color: var(--black);        /* Black text on gold */
+    padding: 14px 36px;         /* Padding */
+    border: none;               /* Remove default border */
+    border-radius: 25px;        /* Pill shape */
+    font-size: 1.05rem;         /* Slightly larger */
+    font-weight: 700;           /* Bold */
+    cursor: pointer;            /* Hand cursor */
+    transition: all 0.3s ease;  /* Smooth animation */
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);  /* Gold shadow */
+}
+
+/* When you hover over contact button */
+.contact-button:hover {
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+    transform: translateY(-3px); /* Lift up */
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);  /* Bigger shadow */
+}
+
+/* ===== FOOTER =====
+   The very bottom of the page */
+
+.end {
+    /* GRADIENT BACKGROUND: black to dark-gray (matches top) */
+    background: linear-gradient(135deg, var(--black) 0%, var(--dark-gray) 100%);
+    
+    color: var(--white);        /* White text */
+    text-align: center;         /* Center text */
+    padding: 30px 40px;         /* Padding */
+    border-top: 2px solid var(--gold);  /* Gold line at top */
+    font-size: 1rem;            /* Regular text */
+}
+
+/* Paragraph in footer */
+.end p {
+    margin: 0;                  /* No margin */
+    letter-spacing: 0.5px;      /* Tiny space between letters */
+}
+
+/* ===== RESPONSIVE DESIGN =====
+   These sections make the website look good on smaller screens
+   
+   How media queries work:
+   @media (max-width: 768px) means "when screen is 768px or smaller"
+   We override previous styles with new ones for smaller screens */
+
+/* Medium screens (tablets): max-width 1024px */
+@media (max-width: 1024px) {
+    .navbar {
+        padding: 12px 30px;     /* Slightly less padding */
+    }
+
+    .navbar .nav-links {
+        gap: 20px;              /* Less gap between links */
+    }
+
+    .navbar .nav-links li a {
+        font-size: 0.95rem;     /* Slightly smaller */
+    }
+
+    .hero-page h1 {
+        font-size: 2.5rem;      /* Smaller heading */
+    }
+
+    .hero-page p {
+        font-size: 1.2rem;      /* Smaller subtitle */
+    }
+
+    .Info, .Backstory, .vision, .cars, .contact-us {
+        padding: 60px 30px;     /* Less padding */
+    }
+
+    .information h2, .story h2, .future-goals h2, .vehicle-info h2, .reach-out h2 {
+        font-size: 2rem;        /* Smaller headings */
+    }
+}
+
+/* Small screens (large phones): max-width 768px */
+@media (max-width: 768px) {
+    .navbar {
+        flex-wrap: wrap;        /* Allow items to wrap to next line */
+        justify-content: center;/* Center wrapped items */
+        gap: 20px;              /* Space between wrapped items */
+        padding: 12px 20px;     /* Reduce padding */
+    }
+
+    .navbar .nav-links {
+        gap: 15px;              /* Less gap */
+        flex-wrap: wrap;        /* Allow wrapping */
+        justify-content: center;/* Center items */
+    }
+
+    .navbar .nav-links li a {
+        font-size: 0.9rem;      /* Smaller text */
+        padding: 6px 8px;       /* Less padding around link */
+    }
+
+    button.login {
+        padding: 8px 16px;      /* Smaller button */
+        font-size: 0.85rem;     /* Smaller text */
+    }
+
+    .Hero-section {
+        padding: 80px 20px;     /* Less padding */
+        min-height: 50vh;       /* Shorter minimum height */
+    }
+
+    .hero-page h1 {
+        font-size: 2rem;        /* Much smaller on mobile */
+    }
+
+    .hero-page p {
+        font-size: 1.1rem;      /* Smaller */
+    }
+
+    .Info, .Backstory, .vision, .cars, .contact-us {
+        padding: 40px 20px;     /* Much less padding */
+    }
+
+    .information h2, .story h2, .future-goals h2, .vehicle-info h2, .reach-out h2 {
+        font-size: 1.8rem;      /* Smaller headings */
+    }
+
+    .information p, .story p, .future-goals p, .vehicle-info p, .reach-out p {
+        font-size: 1rem;        /* Smaller text */
+    }
+
+    .vehicle-info ul {
+        grid-template-columns: 1fr;  /* Only one column (stack vertically) */
+    }
+}
+
+/* Extra small screens (small phones): max-width 480px */
+@media (max-width: 480px) {
+    .navbar {
+        flex-direction: column;  /* Stack items vertically */
+        padding: 10px 15px;     /* Minimal padding */
+    }
+
+    .navbar .logo img {
+        height: 40px;           /* Smaller logo */
+    }
+
+    .navbar .nav-links {
+        gap: 10px;              /* Minimal gap */
+        font-size: 0.85rem;     /* Smaller text */
+    }
+
+    .navbar .nav-links li a {
+        font-size: 0.8rem;      /* Very small */
+        padding: 4px 6px;       /* Minimal padding */
+    }
+
+    button.login {
+        padding: 8px 16px;      /* Small button */
+        font-size: 0.8rem;      /* Tiny text */
+    }
+
+    .Hero-section {
+        padding: 50px 15px;     /* Very little padding */
+    }
+
+    .hero-page h1 {
+        font-size: 1.5rem;      /* Very large on such small screen */
+        margin-bottom: 15px;    /* Less space */
+    }
+
+    .hero-page p {
+        font-size: 1rem;        /* Smaller */
+    }
+
+    .Info, .Backstory, .vision, .cars, .contact-us {
+        padding: 30px 15px;     /* Minimal padding */
+    }
+
+    .information h2, .story h2, .future-goals h2, .vehicle-info h2, .reach-out h2 {
+        font-size: 1.5rem;      /* Even smaller */
+    }
+
+    .information p, .story p, .future-goals p, .vehicle-info p, .reach-out p {
+        font-size: 0.95rem;     /* Tiny text */
+    }
+}
+
+/* END OF STYLESHEET */
